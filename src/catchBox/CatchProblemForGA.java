@@ -1,8 +1,6 @@
 package catchBox;
 
 import ga.Problem;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import java.util.LinkedList;
 
 public class CatchProblemForGA implements Problem<CatchIndividual> {
@@ -14,18 +12,18 @@ public class CatchProblemForGA implements Problem<CatchIndividual> {
             Cell cellCatch,
             Cell door) {
         //TODO
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException("Not Implemented Yet");
     }
 
     @Override
     public CatchIndividual getNewIndividual() {
         //TODO
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException("Not Implemented Yet");
     }
 
     @Override
     public String toString() {
         //TODO
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException("Not Implemented Yet");
     }
 }
