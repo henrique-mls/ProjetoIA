@@ -13,7 +13,8 @@ public class CatchState extends State implements Cloneable {
 
     public CatchState(int[][] matrix) {
         //TODO
-        throw new UnsupportedOperationException("Not Implemented Yet");
+        //para mostrar a matriz
+        this.matrix = matrix;
     }
 
     public void executeAction(Action action) {
@@ -26,6 +27,7 @@ public class CatchState extends State implements Cloneable {
 
     public boolean canMoveUp() {
         //TODO
+
         throw new UnsupportedOperationException("Not Implemented Yet");
     }
 
@@ -61,12 +63,23 @@ public class CatchState extends State implements Cloneable {
 
     public void moveLeft() {
         //TODO
+
         throw new UnsupportedOperationException("Not Implemented Yet");
     }
 
     public int getNumBox() {
-        //TODO
-        throw new UnsupportedOperationException("Not Implemented Yet");
+        //percorrer a matrix e conta o numero de celulas com o número 2 (box)-> ver Properties
+        int numBox = 0;
+        for (int i = 0; i < getSize(); i++){
+            for(int j = 0; j < getSize(); j++){
+                if(matrix[i][j] == 2){
+                    numBox++;
+                }
+            }
+        }
+
+        return numBox;
+
     }
 
     public void setCellCatch(int line, int column) {
