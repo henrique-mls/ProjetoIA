@@ -12,10 +12,18 @@ public class CatchState extends State implements Cloneable {
     protected int[][] matrix;
     private int catchLine;
     private int catchColumn;
+    private Cell goalCell;
+    private int numBox;
+    private int steps;
+
 
     public CatchState(int[][] matrix) {
-        //TODO
-        //para mostrar a matriz
+        this.goalCell = null;
+        this.catchLine = 0;
+        this.catchColumn = 0;
+        this.numBox = 0;
+        this.steps = 0;
+
         this.matrix = matrix;
         for (int i = 0; i < getSize(); i++) {
             for (int j = 0; j < getSize(); j++) {
@@ -23,9 +31,15 @@ public class CatchState extends State implements Cloneable {
                     this.catchLine = i;
                     this.catchColumn = j;
                 }
+                if(this.matrix[i][j] == Properties.BOX){
+                    this.numBox++;
+                }
+
             }
         }
     }
+
+
 
     public void executeAction(Action action) {
         action.execute(this);
@@ -84,43 +98,41 @@ public class CatchState extends State implements Cloneable {
     }
 
     public void moveUp() {
-        setCellCatch(catchLine+1, catchColumn);
+        if(canMoveUp()){
+            setCellCatch(catchLine+1, catchColumn);
+        }
 
     }
 
     public void moveRight() {
-        setCellCatch(catchLine, catchColumn+1);
+        if(canMoveRight()){
+            setCellCatch(catchLine, catchColumn+1);
+        }
 
     }
 
     public void moveDown() {
-        setCellCatch(catchLine+1, catchColumn);
+        if(canMoveDown()){
+            setCellCatch(catchLine+1, catchColumn);
+        }
 
     }
 
     public void moveLeft() {
-        setCellCatch(catchLine, catchColumn-1);
+        if(canMoveLeft()){
+            setCellCatch(catchLine, catchColumn-1);
+        }
 
     }
 
     public int getNumBox() {
-        //percorrer a matrix e conta o numero de celulas com o número 2 (box)-> ver Properties
-        int numBox = 0;
-        for (int i = 0; i < getSize(); i++){
-            for(int j = 0; j < getSize(); j++){
-                if(matrix[i][j] == Properties.BOX){
-                    numBox++;
-                }
-            }
-        }
-
-        return numBox;
-
+        return this.numBox;
     }
 
     public void setCellCatch(int line, int column) {
         matrix[this.catchLine][this.catchColumn] = Properties.EMPTY;
         matrix[line][column] = Properties.CATCH;
+        this.steps++;
     }
 
     public int[][] getMatrix() {
@@ -128,18 +140,11 @@ public class CatchState extends State implements Cloneable {
     }
 
     public void setGoal(int line, int column) {
-        //TODO
-        if(getNumBox() > 0){
-            //caixa
-        }else{
-            //porta
-        }
-        throw new UnsupportedOperationException("Not Implemented Yet");
+        this.goalCell = new Cell(line, column);
     }
 
     public int getSteps() {
-        //TODO
-        throw new UnsupportedOperationException("Not Implemented Yet");
+        return steps;
     }
 
     public int getSize() {
@@ -196,7 +201,6 @@ public class CatchState extends State implements Cloneable {
 
     @Override
     public CatchState clone() {
-        //TODO
         return new CatchState(matrix);
     }
 
@@ -217,6 +221,10 @@ public class CatchState extends State implements Cloneable {
         for (EnvironmentListener listener : listeners) {
             listener.environmentUpdated();
         }
+    }
+
+    public Cell getGoalCell() {
+        return goalCell;
     }
 
 }
