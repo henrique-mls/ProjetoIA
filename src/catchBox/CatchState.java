@@ -10,11 +10,21 @@ public class CatchState extends State implements Cloneable {
     //TODO this class might require the definition of additional methods and/or attributes
 
     protected int[][] matrix;
+    private int catchLine;
+    private int catchColumn;
 
     public CatchState(int[][] matrix) {
         //TODO
         //para mostrar a matriz
         this.matrix = matrix;
+        for (int i = 0; i < getSize(); i++) {
+            for (int j = 0; j < getSize(); j++) {
+                if (this.matrix[i][j] == Properties.CATCH) {
+                    this.catchLine = i;
+                    this.catchColumn = j;
+                }
+            }
+        }
     }
 
     public void executeAction(Action action) {
@@ -26,45 +36,71 @@ public class CatchState extends State implements Cloneable {
     }
 
     public boolean canMoveUp() {
-        //TODO
+        if(catchLine == 0){
+            return false;
+        }
 
-        throw new UnsupportedOperationException("Not Implemented Yet");
+        if(this.matrix[catchLine - 1][catchColumn] == Properties.EMPTY || this.matrix[catchLine - 1][catchColumn] == Properties.BOX){
+            return true;
+        }
+
+        return false;
     }
 
     public boolean canMoveRight() {
-        //TODO
-        throw new UnsupportedOperationException("Not Implemented Yet");
+        if(catchColumn == getSize()){
+            return false;
+        }
+
+        if(this.matrix[catchLine][catchColumn+1] == Properties.EMPTY || this.matrix[catchLine][catchColumn+1] == Properties.BOX){
+            return true;
+        }
+
+        return false;
     }
 
     public boolean canMoveDown() {
-        //TODO
-        throw new UnsupportedOperationException("Not Implemented Yet");
+        if(catchLine == getSize()){
+            return false;
+        }
+
+        if(this.matrix[catchLine +1][catchColumn] == Properties.EMPTY || this.matrix[catchLine +1][catchColumn] == Properties.BOX){
+            return true;
+        }
+
+        return false;
     }
 
     public boolean canMoveLeft() {
-        //TODO
-        throw new UnsupportedOperationException("Not Implemented Yet");
+        if(catchColumn == 0){
+            return false;
+        }
+
+        if(this.matrix[catchLine][catchColumn-1] == Properties.EMPTY || this.matrix[catchLine][catchColumn-1] == Properties.BOX){
+            return true;
+        }
+
+        return false;
     }
 
     public void moveUp() {
-        //TODO
-        throw new UnsupportedOperationException("Not Implemented Yet");
+        setCellCatch(catchLine+1, catchColumn);
+
     }
 
     public void moveRight() {
-        //TODO
-        throw new UnsupportedOperationException("Not Implemented Yet");
+        setCellCatch(catchLine, catchColumn+1);
+
     }
 
     public void moveDown() {
-        //TODO
-        throw new UnsupportedOperationException("Not Implemented Yet");
+        setCellCatch(catchLine+1, catchColumn);
+
     }
 
     public void moveLeft() {
-        //TODO
+        setCellCatch(catchLine, catchColumn-1);
 
-        throw new UnsupportedOperationException("Not Implemented Yet");
     }
 
     public int getNumBox() {
@@ -72,7 +108,7 @@ public class CatchState extends State implements Cloneable {
         int numBox = 0;
         for (int i = 0; i < getSize(); i++){
             for(int j = 0; j < getSize(); j++){
-                if(matrix[i][j] == 2){
+                if(matrix[i][j] == Properties.BOX){
                     numBox++;
                 }
             }
@@ -83,8 +119,8 @@ public class CatchState extends State implements Cloneable {
     }
 
     public void setCellCatch(int line, int column) {
-        //TODO
-        throw new UnsupportedOperationException("Not Implemented Yet");
+        matrix[this.catchLine][this.catchColumn] = Properties.EMPTY;
+        matrix[line][column] = Properties.CATCH;
     }
 
     public int[][] getMatrix() {
@@ -93,6 +129,11 @@ public class CatchState extends State implements Cloneable {
 
     public void setGoal(int line, int column) {
         //TODO
+        if(getNumBox() > 0){
+            //caixa
+        }else{
+            //porta
+        }
         throw new UnsupportedOperationException("Not Implemented Yet");
     }
 
@@ -156,7 +197,7 @@ public class CatchState extends State implements Cloneable {
     @Override
     public CatchState clone() {
         //TODO
-        throw new UnsupportedOperationException("Not Implemented Yet");
+        return new CatchState(matrix);
     }
 
     //Listeners

@@ -19,15 +19,15 @@ public class Cell {
     }
 
     @Override
-    public String toString() {
-        return this.line + "-" + this.column;
-    }
+        public String toString() {
+            return this.line + "-" + this.column;
+        }
 
-    public int getLine() {
-        return line;
-    }
+        public int getLine() {
+            return line;
+        }
 
-    public int getColumn() {
-        return column;
+        public int getColumn() {
+            return column;
     }
 }
