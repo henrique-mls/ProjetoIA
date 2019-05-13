@@ -2,6 +2,7 @@ package catchBox;
 
 import agentSearch.Action;
 import agentSearch.State;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,14 +25,22 @@ public class CatchState extends State implements Cloneable {
         this.numBox = 0;
         this.steps = 0;
 
-        this.matrix = matrix;
+
+        this.matrix = new int[matrix.length][matrix.length];
+
         for (int i = 0; i < getSize(); i++) {
             for (int j = 0; j < getSize(); j++) {
-                if (this.matrix[i][j] == Properties.CATCH) {
+                this.matrix[i][j] = matrix[i][j];
+            }
+        }
+
+        for (int i = 0; i < getSize(); i++) {
+            for (int j = 0; j < getSize(); j++) {
+                /*if (this.matrix[i][j] == Properties.CATCH) {
                     this.catchLine = i;
                     this.catchColumn = j;
-                }
-                if(this.matrix[i][j] == Properties.BOX){
+                }*/
+                if (this.matrix[i][j] == Properties.BOX) {
                     this.numBox++;
                 }
 
@@ -39,90 +48,92 @@ public class CatchState extends State implements Cloneable {
         }
     }
 
+    public CatchState(int[][] matrix, int catchLine, int catchColumn, Cell goalCell, int numBox, int steps) {
+        this.matrix = new int[matrix.length][matrix.length];
 
+        for (int i = 0; i < getSize(); i++) {
+            for (int j = 0; j < getSize(); j++) {
+                this.matrix[i][j] = matrix[i][j];
+            }
+        }
+
+        this.catchLine = catchLine;
+        this.catchColumn = catchColumn;
+        this.goalCell = goalCell;
+        this.numBox = numBox;
+        this.steps = steps;
+    }
 
     public void executeAction(Action action) {
         action.execute(this);
         // TODO
         fireUpdatedEnvironment();
 
-        throw new UnsupportedOperationException("Not Implemented Yet"); // delete after implementing
+        //throw new UnsupportedOperationException("Not Implemented Yet"); // delete after implementing
     }
 
     public boolean canMoveUp() {
-        if(catchLine == 0){
+
+        if (catchLine == 0 || this.matrix[catchLine - 1][catchColumn] == Properties.WALL) {
             return false;
         }
 
-        if(this.matrix[catchLine - 1][catchColumn] == Properties.EMPTY || this.matrix[catchLine - 1][catchColumn] == Properties.BOX){
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
     public boolean canMoveRight() {
-        if(catchColumn == getSize()){
+
+        if (catchColumn == getSize()-1 || this.matrix[catchLine][catchColumn + 1] == Properties.WALL) {
             return false;
         }
 
-        if(this.matrix[catchLine][catchColumn+1] == Properties.EMPTY || this.matrix[catchLine][catchColumn+1] == Properties.BOX){
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
     public boolean canMoveDown() {
-        if(catchLine == getSize()){
+
+        if (catchLine == getSize()-1 || this.matrix[catchLine + 1][catchColumn] == Properties.WALL) {
             return false;
         }
 
-        if(this.matrix[catchLine +1][catchColumn] == Properties.EMPTY || this.matrix[catchLine +1][catchColumn] == Properties.BOX){
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
     public boolean canMoveLeft() {
-        if(catchColumn == 0){
+
+        if (catchColumn == 0 || this.matrix[catchLine][catchColumn - 1] == Properties.WALL) {
             return false;
         }
 
-        if(this.matrix[catchLine][catchColumn-1] == Properties.EMPTY || this.matrix[catchLine][catchColumn-1] == Properties.BOX){
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
     public void moveUp() {
-        if(canMoveUp()){
-            setCellCatch(catchLine+1, catchColumn);
-        }
-
+        matrix[this.catchLine][this.catchColumn] = Properties.EMPTY;
+        matrix[this.catchLine -1][this.catchColumn] = Properties.CATCH;
+        setCellCatch(this.catchLine-1, this.catchColumn);
+        steps++;
     }
 
     public void moveRight() {
-        if(canMoveRight()){
-            setCellCatch(catchLine, catchColumn+1);
-        }
-
+        matrix[this.catchLine][this.catchColumn] = Properties.EMPTY;
+        matrix[this.catchLine][this.catchColumn+1] = Properties.CATCH;
+        setCellCatch(this.catchLine, this.catchColumn+1);
+        steps++;
     }
 
     public void moveDown() {
-        if(canMoveDown()){
-            setCellCatch(catchLine+1, catchColumn);
-        }
-
+        matrix[this.catchLine][this.catchColumn] = Properties.EMPTY;
+        matrix[this.catchLine+1][this.catchColumn] = Properties.CATCH;
+        setCellCatch(this.catchLine+1, this.catchColumn);
+        steps++;
     }
 
     public void moveLeft() {
-        if(canMoveLeft()){
-            setCellCatch(catchLine, catchColumn-1);
-        }
-
+        matrix[this.catchLine][this.catchColumn] = Properties.EMPTY;
+        matrix[this.catchLine][this.catchColumn-1] = Properties.CATCH;
+        setCellCatch(this.catchLine, this.catchColumn-1);
+        steps++;
     }
 
     public int getNumBox() {
@@ -130,9 +141,8 @@ public class CatchState extends State implements Cloneable {
     }
 
     public void setCellCatch(int line, int column) {
-        matrix[this.catchLine][this.catchColumn] = Properties.EMPTY;
-        matrix[line][column] = Properties.CATCH;
-        this.steps++;
+        this.catchLine = line;
+        this.catchColumn = column;
     }
 
     public int[][] getMatrix() {
@@ -201,7 +211,8 @@ public class CatchState extends State implements Cloneable {
 
     @Override
     public CatchState clone() {
-        return new CatchState(matrix);
+
+        return new CatchState(matrix, catchLine, catchColumn, goalCell, numBox, steps);
     }
 
     //Listeners
@@ -227,4 +238,18 @@ public class CatchState extends State implements Cloneable {
         return goalCell;
     }
 
+    public int computeDistance(int line, int column, Cell goalCell) {
+        int dx = Math.abs(line - goalCell.getLine());
+        int dy = Math.abs(column - goalCell.getColumn());
+
+        return 1 * (dx + dy);
+    }
+
+    public int getCatchLine() {
+        return catchLine;
+    }
+
+    public int getCatchColumn() {
+        return catchColumn;
+    }
 }
