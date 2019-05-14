@@ -10,27 +10,28 @@ public class CatchProblemForGA implements Problem<CatchIndividual> {
     private Cell cellCatch;
     private Cell door;
 
-    public CatchProblemForGA(
-            LinkedList<Cell> cellsBoxes,
-            LinkedList<Pair> pairs,
-            Cell cellCatch,
-            Cell door) {
-        //TODO
-        //throw new UnsupportedOperationException("Not Implemented Yet");
+    public CatchProblemForGA(LinkedList<Cell> cellsBoxes, LinkedList<Pair> pairs, Cell cellCatch, Cell door) {
+        this.cellsBoxes = cellsBoxes;
+        this.pairs = pairs;
+        this.cellCatch = cellCatch;
+        this.door = door;
     }
 
     @Override
     public CatchIndividual getNewIndividual() {
         //TODO
-        //return new CatchIndividual(this, )
+        return new CatchIndividual(this, this.cellsBoxes.size());
         //throw new UnsupportedOperationException("Not Implemented Yet");
-        return null;
     }
 
     @Override
     public String toString() {
         //TODO
         //throw new UnsupportedOperationException("Not Implemented Yet");
-        return "";
+        StringBuilder sb = new StringBuilder();
+        for (Pair pair : pairs) {
+            sb.append(pair.toString());
+        }
+        return sb.toString();
     }
 }

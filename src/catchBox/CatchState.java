@@ -130,6 +130,7 @@ public class CatchState extends State implements Cloneable {
     }
 
     public void moveLeft() {
+        //TODO decrementar numbox
         matrix[this.catchLine][this.catchColumn] = Properties.EMPTY;
         matrix[this.catchLine][this.catchColumn-1] = Properties.CATCH;
         setCellCatch(this.catchLine, this.catchColumn-1);
