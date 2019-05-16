@@ -22,7 +22,6 @@ public class CatchProblemSearch<S extends CatchState> extends Problem<S> {
         availableActions.add(new ActionDown());
         availableActions.add(new ActionLeft());
 
-
     }
 
     @Override

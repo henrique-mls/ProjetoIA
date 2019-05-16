@@ -248,7 +248,7 @@ public class CatchState extends State implements Cloneable {
         int dx = Math.abs(line - goalCell.getLine());
         int dy = Math.abs(column - goalCell.getColumn());
 
-        return 1 * (dx + dy);
+        return (dx + dy);
     }
 
     public int getCatchLine() {

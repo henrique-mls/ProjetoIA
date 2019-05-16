@@ -1,5 +1,7 @@
 package ga;
 
+import catchBox.CatchState;
+
 public abstract class IntVectorIndividual<P extends Problem, I extends IntVectorIndividual> extends Individual<P, I> {
     //TODO this class might require the definition of additional methods and/or attributes
 
@@ -8,10 +10,13 @@ public abstract class IntVectorIndividual<P extends Problem, I extends IntVector
     public IntVectorIndividual(P problem, int size) {
         super(problem);
         genome = new int[size];
+        for (int i = 0; i < genome.length; i++) {
+            genome[i] = GeneticAlgorithm.random.nextInt();
+        }
 
         //TODO
-        throw new UnsupportedOperationException("Not Implemented Yet");
-      }
+        //throw new UnsupportedOperationException("Not Implemented Yet");
+    }
 
     public IntVectorIndividual(IntVectorIndividual<P, I> original) {
         super(original);
