@@ -73,7 +73,7 @@ public class CatchState extends State implements Cloneable {
     }
 
     public boolean canMoveUp() {
-
+        
         if (catchLine == 0 || this.matrix[catchLine - 1][catchColumn] == Properties.WALL) {
             return false;
         }
@@ -109,14 +109,21 @@ public class CatchState extends State implements Cloneable {
     }
 
     public void moveUp() {
+        //passar a celula onde estavamos para empty (branco)
         matrix[this.catchLine][this.catchColumn] = Properties.EMPTY;
+        //decrementar o numbox se a celula para onde formos for box
+        decrementarNumBox(this.catchLine-1, this.catchColumn);
+        //passar a celula para onde fomos para catch (nós)
         matrix[this.catchLine -1][this.catchColumn] = Properties.CATCH;
+        //set à nossa posicao (linha e coluna)
         setCellCatch(this.catchLine-1, this.catchColumn);
+        //incrementar o numero de passos dados
         steps++;
     }
 
     public void moveRight() {
         matrix[this.catchLine][this.catchColumn] = Properties.EMPTY;
+        decrementarNumBox(this.catchLine, this.catchColumn+1);
         matrix[this.catchLine][this.catchColumn+1] = Properties.CATCH;
         setCellCatch(this.catchLine, this.catchColumn+1);
         steps++;
@@ -124,6 +131,7 @@ public class CatchState extends State implements Cloneable {
 
     public void moveDown() {
         matrix[this.catchLine][this.catchColumn] = Properties.EMPTY;
+        decrementarNumBox(this.catchLine+1, this.catchColumn);
         matrix[this.catchLine+1][this.catchColumn] = Properties.CATCH;
         setCellCatch(this.catchLine+1, this.catchColumn);
         steps++;
@@ -131,13 +139,14 @@ public class CatchState extends State implements Cloneable {
 
     public void moveLeft() {
         matrix[this.catchLine][this.catchColumn] = Properties.EMPTY;
+        decrementarNumBox(this.catchLine, this.catchColumn-1);
         matrix[this.catchLine][this.catchColumn-1] = Properties.CATCH;
         setCellCatch(this.catchLine, this.catchColumn-1);
         steps++;
     }
 
-    public void decrementarNumBox(){
-        if(this.matrix[catchLine][catchColumn] == Properties.BOX){
+    public void decrementarNumBox(int line, int column){
+        if(this.matrix[line][column] == Properties.BOX){
             numBox--;
         }
     }
@@ -245,6 +254,7 @@ public class CatchState extends State implements Cloneable {
     }
 
     public int computeDistance(int line, int column, Cell goalCell) {
+        //based on manhattan distance falta parametro d no return para caso o espaço entre cada celula não fosse 1 unidade acho eu
         int dx = Math.abs(line - goalCell.getLine());
         int dy = Math.abs(column - goalCell.getColumn());
 
