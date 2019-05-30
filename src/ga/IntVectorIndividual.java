@@ -2,6 +2,8 @@ package ga;
 
 import catchBox.CatchState;
 
+import java.util.LinkedList;
+
 public abstract class IntVectorIndividual<P extends Problem, I extends IntVectorIndividual> extends Individual<P, I> {
     //TODO this class might require the definition of additional methods and/or attributes
 
@@ -10,8 +12,17 @@ public abstract class IntVectorIndividual<P extends Problem, I extends IntVector
     public IntVectorIndividual(P problem, int size) {
         super(problem);
         genome = new int[size];
+        LinkedList<Integer> valoresUsados = new LinkedList();
+        int value;
         for (int i = 0; i < genome.length; i++) {
-            genome[i] = GeneticAlgorithm.random.nextInt();
+            while(true){
+                value = GeneticAlgorithm.random.nextInt(size);
+                if(!valoresUsados.contains(value)){
+                    genome[i] = value;
+                    valoresUsados.add(value);
+                    break;
+                }
+            }
         }
 
         //TODO

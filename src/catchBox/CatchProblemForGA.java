@@ -20,6 +20,7 @@ public class CatchProblemForGA implements Problem<CatchIndividual> {
     @Override
     public CatchIndividual getNewIndividual() {
         //TODO
+        //devolve um novo individuo Catch passando-lhe o numero de caixas para apanhar I guess
         return new CatchIndividual(this, this.cellsBoxes.size());
         //throw new UnsupportedOperationException("Not Implemented Yet");
     }
@@ -33,5 +34,21 @@ public class CatchProblemForGA implements Problem<CatchIndividual> {
             sb.append(pair.toString());
         }
         return sb.toString();
+    }
+
+    public LinkedList<Cell> getCellsBoxes() {
+        return cellsBoxes;
+    }
+
+    public LinkedList<Pair> getPairs() {
+        return pairs;
+    }
+
+    public Cell getCellCatch() {
+        return cellCatch;
+    }
+
+    public Cell getDoor() {
+        return door;
     }
 }
