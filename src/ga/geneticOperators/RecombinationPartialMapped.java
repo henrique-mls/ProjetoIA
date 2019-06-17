@@ -17,20 +17,26 @@ public class RecombinationPartialMapped<I extends IntVectorIndividual, P extends
 
     @Override
     public void recombine(I ind1, I ind2) {
+        //começam a 0
         child1 = new int[ind1.getNumGenes()];
         child2 = new int[ind2.getNumGenes()];
+        //onde vai cortar
         cut1 = GeneticAlgorithm.random.nextInt(ind1.getNumGenes());
         cut2 = GeneticAlgorithm.random.nextInt(ind1.getNumGenes());
+        //se o 2 for maior que o 1 para não ser igual
         if (cut1 > cut2) {
             int aux = cut1;
             cut1 = cut2;
             cut2 = aux;
         }
 
+        //cria-se o segmento do corte
         create_Segments(cut1, cut2, ind1, ind2);
+        //
         crossOver(child1, ind1);
         crossOver(child2, ind2);
 
+        //preenche o ind1 e o ind2 com os genes já trocados = childs
         for (int i = 0; i < ind1.getNumGenes(); i++) {
             ind1.setGene(i, child1[i]);
             ind2.setGene(i, child2[i]);
@@ -94,6 +100,7 @@ public class RecombinationPartialMapped<I extends IntVectorIndividual, P extends
             insert_Segments(offspring, segment);
         }
 
+        //prenche o resto do que nao estava no cut com o que já lá estava no individuo
         for (int index = 0; index < offspring.length; index++) {
             if ((index < cut1) || (index > cut2)) {
                 offspring[index] = ind.getGene(index);

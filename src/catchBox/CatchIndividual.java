@@ -33,12 +33,14 @@ public class CatchIndividual extends IntVectorIndividual<CatchProblemForGA, Catc
                     custo += pair.getValue();
                     cellCatch = cell;
                 }
+                //caso o par esteja ao contrário
                 if(pair.getCell1() == cell && pair.getCell2() == cellCatch){
                     custo += pair.getValue();
                     cellCatch = cell;
                 }
             }
         }
+        //par da porta
         for (Pair pair : pairs) {
             if(pair.getCell1() == cellCatch && pair.getCell2() == door){
                 custo += pair.getValue();
