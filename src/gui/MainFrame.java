@@ -175,7 +175,7 @@ public class MainFrame extends JFrame implements GAListener {
 
     public void buttonDataSet_actionPerformed(ActionEvent e) {
 
-        JFileChooser fc = new JFileChooser(new File("."));
+        JFileChooser fc = new JFileChooser(new File("./DataSets"));
         int returnVal = fc.showOpenDialog(this);
 
         try {
@@ -389,7 +389,7 @@ public class MainFrame extends JFrame implements GAListener {
     }
 
     public void buttonExperiments_actionPerformed(ActionEvent e) {
-        JFileChooser fc = new JFileChooser(new File("."));
+        JFileChooser fc = new JFileChooser(new File("./Configs"));
         int returnVal = fc.showOpenDialog(this);
 
         try {

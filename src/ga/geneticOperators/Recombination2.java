@@ -7,26 +7,29 @@ public class Recombination2<I extends IntVectorIndividual, P extends Problem<I>>
 
     //TODO this class might require the definition of additional methods and/or attributes
 
-    public Recombination2(double probability) {
-        super(probability);
-    }
-
     private int[] child1;
     private int[] child2;
     private int[] offspring1;
     private int[] offspring2;
 
+    public Recombination2(double probability) {
+        super(probability);
+    }
+
     @Override
     public void recombine(I ind1, I ind2) {
         //TODO
+        //copia dos ind1 e ind2 mas para int[]
         this.child1 = new int[ind1.getNumGenes()];
         this.child2 = new int[ind2.getNumGenes()];
 
+        //aqui é que copia mm
         for(int index = 0; index < child1.length; index ++){
             this.child1[index] = ind1.getGene(index);
             this.child1[index] = ind2.getGene(index);
         }
 
+        //o resultado
         this.offspring1 = new int[child1.length];
         this.offspring2 = new int[child2.length];
 
@@ -48,9 +51,9 @@ public class Recombination2<I extends IntVectorIndividual, P extends Problem<I>>
 
     public void crossOver(int[] offspring, int[] childX, int[] childY){
         int index = 0;
-        while(!element_already_inOffspring(offspring, childY[index])){
+        while(!elementAlreadyInOffspring(offspring, childY[index])){
             offspring[index] = childX[index];
-            int position = getPosition_ofSecondParentElement_infirstParent
+            int position = getPositionOfSecondParentElementInFirstParent
                     (childX, childY[index]);
             offspring[position] = childY[index];
             index = position;
@@ -63,7 +66,7 @@ public class Recombination2<I extends IntVectorIndividual, P extends Problem<I>>
         }
     }
 
-    private boolean element_already_inOffspring(int[] offspring, int element){
+    private boolean elementAlreadyInOffspring(int[] offspring, int element){
         for(int index = 0; index < offspring.length; index++){
             if(offspring[index] == element){
                 return true;
@@ -72,7 +75,7 @@ public class Recombination2<I extends IntVectorIndividual, P extends Problem<I>>
         return false;
     }
 
-    private int getPosition_ofSecondParentElement_infirstParent(int [] firstChild, int elementToSearch){
+    private int getPositionOfSecondParentElementInFirstParent(int[] firstChild, int elementToSearch){
         int pos = 0;
         for(int i = 0; i < child1.length; i++){
             if(firstChild[i] == elementToSearch){
