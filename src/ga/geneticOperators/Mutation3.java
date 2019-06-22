@@ -12,7 +12,7 @@ public class Mutation3<I extends IntVectorIndividual, P extends Problem<I>> exte
 
     @Override
     public void mutate(I ind) {
-        //TODO
+        //TODO doenst work
         //throw new UnsupportedOperationException("Not Implemented Yet");
         int[] parent = new int[ind.getNumGenes()];
         int l = parent.length;
