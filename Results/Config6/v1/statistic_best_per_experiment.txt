@@ -1,0 +1,41 @@
+
+
+Population size:200
+Max generations:1000
+Selection:Tournament(4)
+Recombination:PMX
+Recombination prob.: 0.8
+Mutation:Insert
+Mutation prob.: 0.5
+fitness: 93.0
+path: 12 6 9 3 0 8 16 17 19 18 14 10 4 1 2 5 7 11 13 15 20 23 22 27 30 32 33 34 31 28 26 24 21 25 29 
+
+Population size:200
+Max generations:2000
+Selection:Tournament(4)
+Recombination:PMX
+Recombination prob.: 0.8
+Mutation:Insert
+Mutation prob.: 0.5
+fitness: 91.0
+path: 12 6 3 0 9 8 16 17 19 18 14 10 4 1 2 5 7 11 13 15 23 20 22 27 30 32 33 34 31 28 26 24 21 25 29 
+
+Population size:500
+Max generations:1000
+Selection:Tournament(4)
+Recombination:PMX
+Recombination prob.: 0.8
+Mutation:Insert
+Mutation prob.: 0.5
+fitness: 97.0
+path: 12 6 0 3 9 8 16 17 14 10 4 1 2 5 7 11 13 15 20 23 22 24 18 19 21 26 27 28 31 34 33 32 30 25 29 
+
+Population size:500
+Max generations:2000
+Selection:Tournament(4)
+Recombination:PMX
+Recombination prob.: 0.8
+Mutation:Insert
+Mutation prob.: 0.5
+fitness: 93.0
+path: 12 6 0 3 9 8 16 17 19 18 14 10 4 1 2 5 7 11 13 15 23 20 22 24 21 26 27 28 31 34 33 32 30 25 29 
